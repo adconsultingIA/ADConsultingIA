@@ -222,7 +222,7 @@ function HomePage() {
       <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
           <a href="#" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-blue-400/30 bg-gradient-to-br from-blue-500 to-blue-700 text-sm font-bold text-white shadow-md shadow-blue-600/10">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-sm font-bold text-white shadow-lg shadow-blue-600/20">
               AD
             </div>
 
@@ -251,6 +251,10 @@ function HomePage() {
               Réalisations
             </a>
 
+            <a href="#roadmap" className="transition hover:text-blue-600">
+              Roadmap
+            </a>
+
             <a href="#contact" className="transition hover:text-blue-600">
               Contact
             </a>
@@ -271,14 +275,14 @@ function HomePage() {
         <section className="relative overflow-hidden bg-white">
           <div className="absolute -left-32 top-20 h-96 w-96 rounded-full bg-blue-100/60 blur-3xl" />
 
-          <div className="mx-auto grid min-h-[700px] max-w-7xl items-center gap-12 px-6 py-20 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
+          <div className="mx-auto grid min-h-[780px] max-w-7xl items-center gap-12 px-6 py-20 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
             <div className="relative z-10">
               <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700">
                 <Sparkles size={16} />
                 AD CONSULTING IA
               </div>
 
-              <h1 className="max-w-3xl title-hero font-bold">
+              <h1 className="max-w-3xl text-5xl font-bold tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
                 Un écosystème de solutions{' '}
                 <span className="text-blue-600">intelligentes</span> en expansion.
               </h1>
@@ -346,7 +350,7 @@ function HomePage() {
                   Produits métiers
                 </p>
 
-                <h2 className="title-section font-bold">
+                <h2 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
                   Des outils conçus pour résoudre des problèmes concrets.
                 </h2>
               </div>
@@ -373,7 +377,7 @@ function HomePage() {
                     </span>
                   </div>
 
-                  <h3 className="title-card font-bold">
+                  <h3 className="mt-8 text-2xl font-bold">
                     FundraisingPortal
                   </h3>
 
@@ -414,7 +418,7 @@ function HomePage() {
                   </span>
                 </div>
 
-                <h3 className="title-card font-bold">DevisFlow</h3>
+                <h3 className="mt-8 text-2xl font-bold">DevisFlow</h3>
 
                 <p className="mt-4 leading-7 text-slate-600">
                   Transformer plus rapidement une demande client en proposition
@@ -451,7 +455,7 @@ function HomePage() {
                   </span>
                 </div>
 
-                <h3 className="title-card font-bold">DonorFlow</h3>
+                <h3 className="mt-8 text-2xl font-bold">DonorFlow</h3>
 
                 <p className="mt-4 leading-7 text-slate-600">
                   Une future solution dédiée à la connaissance, la segmentation et
@@ -491,7 +495,7 @@ function HomePage() {
                 Notre écosystème
               </p>
 
-              <h2 className="title-section font-bold">
+              <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
                 Chaque produit résout un besoin. Ensemble, ils créent un
                 système.
               </h2>
@@ -517,9 +521,7 @@ function HomePage() {
                     </div>
 
                     <div className="mt-7 flex items-center justify-between gap-3">
-                      <h3 className="mt-4 text-sm font-bold text-slate-950">
-                        {product.name}
-                      </h3>
+                      <h3 className="text-xl font-bold">{product.name}</h3>
 
                       <span
                         className={`rounded-full px-3 py-1 text-xs font-bold ${statusStyles[product.status]}`}
@@ -559,7 +561,7 @@ function HomePage() {
                   Réalisations
                 </p>
 
-                <h2 className="title-section font-bold">
+                <h2 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
                   Des solutions digitales construites autour de besoins réels.
                 </h2>
               </div>
@@ -586,7 +588,7 @@ function HomePage() {
                       Live
                     </span>
 
-                    <h3 className="title-card font-bold">
+                    <h3 className="mt-5 text-3xl font-bold">
                       FundraisingPortal
                     </h3>
 
@@ -629,7 +631,7 @@ function HomePage() {
                     Projet web
                   </p>
 
-                  <h3 className="title-card font-bold">
+                  <h3 className="mt-5 text-2xl font-bold">
                     Jewelboxx31
                   </h3>
 
@@ -656,7 +658,7 @@ function HomePage() {
                     Projet web
                   </p>
 
-                  <h3 className="title-card font-bold">
+                  <h3 className="mt-5 text-2xl font-bold">
                     Eauvalis
                   </h3>
 
@@ -683,7 +685,7 @@ function HomePage() {
                     À venir
                   </p>
 
-                  <h3 className="title-card font-bold">
+                  <h3 className="mt-5 text-2xl font-bold text-slate-500">
                     Projet web 3
                   </h3>
 
@@ -697,7 +699,7 @@ function HomePage() {
                     À venir
                   </p>
 
-                  <h3 className="title-card font-bold">
+                  <h3 className="mt-5 text-2xl font-bold text-slate-500">
                     Projet web 4
                   </h3>
 
@@ -719,7 +721,7 @@ function HomePage() {
                   Mission
                 </p>
 
-                <h3 className="title-card font-bold">
+                <h3 className="mt-5 text-3xl font-bold">
                   Rendre l'IA réellement utile aux organisations.
                 </h3>
 
@@ -734,7 +736,7 @@ function HomePage() {
                   Vision
                 </p>
 
-                <h3 className="title-card font-bold">
+                <h3 className="mt-5 text-3xl font-bold">
                   Chaque métier mérite son propre Copilot.
                 </h3>
 
@@ -749,7 +751,7 @@ function HomePage() {
                   ROI
                 </p>
 
-                <h3 className="title-card font-bold">
+                <h3 className="mt-5 text-3xl font-bold">
                   L'IA doit produire un résultat mesurable.
                 </h3>
 
@@ -770,7 +772,7 @@ function HomePage() {
                 Notre approche
               </p>
 
-              <h2 className="title-section font-bold">
+              <h2 className="mt-4 text-4xl font-bold sm:text-5xl">
                 Nous ne vendons pas de l'IA. Nous construisons des systèmes.
               </h2>
             </div>
@@ -795,7 +797,7 @@ function HomePage() {
                   className="rounded-3xl border border-white/10 bg-white/5 p-7 backdrop-blur"
                 >
                   <Workflow className="text-blue-400" size={25} />
-                  <h3 className="title-card font-bold">{item.title}</h3>
+                  <h3 className="mt-6 text-xl font-bold">{item.title}</h3>
                   <p className="mt-4 leading-7 text-slate-400">{item.text}</p>
                 </article>
               ))}
@@ -812,7 +814,7 @@ function HomePage() {
                 Pourquoi AD Consulting IA
               </p>
 
-              <h2 className="title-section font-bold">
+              <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
                 Des systèmes pensés pour évoluer avec vos besoins.
               </h2>
             </div>
@@ -838,7 +840,7 @@ function HomePage() {
                 >
                   <div className="mb-6 h-2 w-10 rounded-full bg-blue-600" />
 
-                  <h3 className="mt-4 text-sm font-bold text-slate-950">
+                  <h3 className="text-2xl font-bold">
                     {item.title}
                   </h3>
 
@@ -858,7 +860,7 @@ function HomePage() {
               Évolution
             </p>
 
-            <h2 className="title-section font-bold">
+            <h2 className="mt-4 max-w-3xl text-4xl font-bold sm:text-5xl">
               L'écosystème grandit à chaque nouvelle solution.
             </h2>
 
@@ -876,7 +878,7 @@ function HomePage() {
                     </div>
 
                     <div className="mt-6 rounded-3xl border border-slate-200 bg-slate-50 p-6">
-                      <h3 className="mt-4 text-sm font-bold text-slate-950">
+                      <h3 className="text-lg font-bold">
                         {product.name}
                       </h3>
 
@@ -908,7 +910,7 @@ function HomePage() {
                 AD Consulting IA
               </p>
 
-              <h2 className="title-section font-bold">
+              <h2 className="mt-4 text-4xl font-bold">
                 Quel processus vous fait perdre du temps aujourd'hui ?
               </h2>
 
