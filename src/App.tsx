@@ -1,121 +1,723 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import {
+  ArrowRight,
+  Bot,
+  FileText,
+  HeartHandshake,
+  LoaderCircle,
+  Network,
+  Sparkles,
+  Workflow,
+} from 'lucide-react'
+import { Link, Route, Routes } from 'react-router-dom'
+import ProductPage from './pages/ProductPage'
 
-function App() {
-  const [count, setCount] = useState(0)
+type ProductStatus = 'Live' | 'Building' | 'Roadmap' | 'Coming Soon'
 
+type EcosystemProduct = {
+  name: string
+  slug: string
+  status: ProductStatus
+  description: string
+  icon: typeof Bot
+  x: number
+  y: number
+  delay: number
+}
+
+const ecosystemProducts: EcosystemProduct[] = [
+  {
+    name: 'FundraisingPortal',
+    slug: 'fundraising',
+    status: 'Live',
+    description:
+      'Analyse, qualification, matching financeurs, pipeline et relances.',
+    icon: HeartHandshake,
+    x: 16,
+    y: 21,
+    delay: 0.15,
+  },
+  {
+    name: 'DevisFlow',
+    slug: 'devisflow',
+    status: 'Building',
+    description:
+      'De la demande client au devis envoyé avec automatisation et IA.',
+    icon: FileText,
+    x: 83,
+    y: 24,
+    delay: 0.3,
+  },
+  {
+    name: 'DonorFlow',
+    slug: 'donorflow',
+    status: 'Roadmap',
+    description:
+      'Gestion intelligente des donateurs, segmentation et engagement.',
+    icon: Bot,
+    x: 82,
+    y: 78,
+    delay: 0.45,
+  },
+  {
+    name: 'Next Product',
+    slug: 'next',
+    status: 'Coming Soon',
+    description: 'Une nouvelle solution rejoindra bientôt l’écosystème.',
+    icon: LoaderCircle,
+    x: 18,
+    y: 77,
+    delay: 0.6,
+  },
+]
+
+const productCards = ecosystemProducts.slice(0, 3)
+
+const statusStyles: Record<ProductStatus, string> = {
+  Live: 'bg-emerald-100 text-emerald-700',
+  Building: 'bg-amber-100 text-amber-700',
+  Roadmap: 'bg-violet-100 text-violet-700',
+  'Coming Soon': 'bg-blue-100 text-blue-700',
+}
+
+function EcosystemVisual() {
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
+    <div className="relative mx-auto h-[560px] w-full max-w-[620px]">
+      {/* Glow */}
+      <div className="absolute left-1/2 top-1/2 h-[430px] w-[430px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/10 blur-3xl" />
+
+      {/* Orbites */}
+      <div className="ecosystem-orbit absolute left-1/2 top-1/2 h-[410px] w-[410px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-200/70" />
+
+      <div className="absolute left-1/2 top-1/2 h-[300px] w-[300px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-blue-200/50" />
+
+      <div className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-blue-100" />
+
+      {/* Lignes */}
+      <svg
+        className="pointer-events-none absolute inset-0 h-full w-full"
+        viewBox="0 0 620 560"
+        fill="none"
+        aria-hidden="true"
+      >
+        <defs>
+          <linearGradient id="connectionGradient">
+            <stop offset="0%" stopColor="#60a5fa" stopOpacity="0.2" />
+            <stop offset="50%" stopColor="#2563eb" stopOpacity="0.9" />
+            <stop offset="100%" stopColor="#60a5fa" stopOpacity="0.2" />
+          </linearGradient>
+        </defs>
+
+          <line
+            className="ecosystem-line"
+            x1="310"
+            y1="280"
+            x2="105"
+            y2="118"
+            stroke="url(#connectionGradient)"
+            strokeWidth="2"
+          />
+
+          <line
+            className="ecosystem-line ecosystem-line-delay-1"
+            x1="310"
+            y1="280"
+            x2="515"
+            y2="135"
+            stroke="url(#connectionGradient)"
+            strokeWidth="2"
+          />
+
+          <line
+            className="ecosystem-line ecosystem-line-delay-2"
+            x1="310"
+            y1="280"
+            x2="508"
+            y2="438"
+            stroke="url(#connectionGradient)"
+            strokeWidth="2"
+          />
+
+          <line
+            className="ecosystem-line ecosystem-line-delay-3"
+            x1="310"
+            y1="280"
+            x2="112"
+            y2="430"
+            stroke="url(#connectionGradient)"
+            strokeWidth="2"
+            strokeDasharray="7 7"
+          />
+
+        <circle cx="310" cy="280" r="5" fill="#2563eb" />
+      </svg>
+
+      {/* Hub central */}
+      <div className="ecosystem-hub absolute left-1/2 top-1/2 z-20 flex h-48 w-48 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-gradient-to-br from-blue-500 via-blue-600 to-blue-900 text-center text-white shadow-[0_25px_80px_rgba(37,99,235,0.35)]">
         <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.tsx</code> and save to test <code>HMR</code>
+          <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-2xl bg-white/15 backdrop-blur">
+            <Network size={27} />
+          </div>
+
+          <p className="text-xl font-bold">AD Consulting IA</p>
+
+          <p className="mt-2 text-xs font-medium uppercase tracking-[0.18em] text-blue-100">
+            Intelligent Ecosystem
           </p>
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
+      </div>
+
+      {/* Produits */}
+      {ecosystemProducts.map((product) => {
+        const Icon = product.icon
+        const isComingSoon = product.status === 'Coming Soon'
+
+        return (
+          <article
+            key={product.name}
+            className="ecosystem-node group absolute z-30 w-[190px] -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-slate-200 bg-white/95 p-5 shadow-xl backdrop-blur transition duration-300 hover:z-40 hover:-translate-y-[55%] hover:scale-105 hover:border-blue-300 hover:shadow-2xl"
+            style={{
+              left: `${product.x}%`,
+              top: `${product.y}%`,
+              animationDelay: `${product.delay}s`,
+            }}
+          >
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-50 text-blue-600">
+                <Icon
+                  size={20}
+                  className={isComingSoon ? 'animate-spin-slow' : ''}
+                />
+              </div>
+
+              <span
+                className={`rounded-full px-2.5 py-1 text-[10px] font-bold ${statusStyles[product.status]}`}
+              >
+                {product.status}
+              </span>
+            </div>
+
+            <h3 className="mt-4 text-sm font-bold text-slate-950">
+              {product.name}
+            </h3>
+
+            <p className="mt-2 max-h-0 overflow-hidden text-xs leading-5 text-slate-500 opacity-0 transition-all duration-300 group-hover:max-h-24 group-hover:opacity-100">
+              {product.description}
+            </p>
+
+            {isComingSoon && (
+              <div className="mt-4 h-1 overflow-hidden rounded-full bg-blue-100">
+                <div className="loading-product-bar h-full rounded-full bg-blue-500" />
+              </div>
+            )}
+          </article>
+        )
+      })}
+    </div>
+  )
+}
+
+function HomePage() {
+  return (
+    <div className="min-h-screen bg-slate-50 text-slate-950">
+      <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/85 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4 lg:px-8">
+          <a href="#" className="flex items-center gap-3">
+            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-blue-600 text-sm font-bold text-white shadow-lg shadow-blue-600/20">
+              AD
+            </div>
+
+            <div>
+              <p className="font-bold leading-none">AD Consulting IA</p>
+              <p className="mt-1 text-xs text-slate-500">
+                Intelligent Business Systems
+              </p>
+            </div>
+          </a>
+
+          <nav className="hidden items-center gap-8 text-sm font-medium text-slate-600 md:flex">
+            <a href="#solutions" className="transition hover:text-blue-600">
+              Solutions
+            </a>
+
+            <a href="#products" className="transition hover:text-blue-600">
+              Produits
+            </a>
+
+            <a href="#vision" className="transition hover:text-blue-600">
+              Vision
+            </a>
+
+            <a href="#roadmap" className="transition hover:text-blue-600">
+              Roadmap
+            </a>
+
+            <a href="#contact" className="transition hover:text-blue-600">
+              Contact
+            </a>
+          </nav>
+
+          <a
+            href="#contact"
+            className="hidden items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-700 sm:flex"
+          >
+            Demander une démo
+            <ArrowRight size={16} />
+          </a>
+        </div>
+      </header>
+
+      <main>
+        {/* HERO */}
+        <section className="relative overflow-hidden bg-white">
+          <div className="absolute -left-32 top-20 h-96 w-96 rounded-full bg-blue-100/60 blur-3xl" />
+
+          <div className="mx-auto grid min-h-[780px] max-w-7xl items-center gap-12 px-6 py-20 lg:grid-cols-[0.95fr_1.05fr] lg:px-8">
+            <div className="relative z-10">
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-4 py-2 text-sm font-semibold text-blue-700">
+                <Sparkles size={16} />
+                AD CONSULTING IA
+              </div>
+
+              <h1 className="max-w-3xl text-5xl font-bold tracking-tight text-slate-950 sm:text-6xl lg:text-7xl">
+                Un écosystème de solutions{' '}
+                <span className="text-blue-600">intelligentes</span> en expansion.
+              </h1>
+
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-600">
+                Nous transformons des processus métier complexes en systèmes
+                intelligents, automatisés et mesurables.
+              </p>
+
+              <p className="mt-4 max-w-2xl leading-7 text-slate-500">
+                Chaque produit répond à un besoin précis. Ensemble, ils
+                construisent progressivement l'écosystème technologique AD
+                Consulting IA.
+              </p>
+
+              <div className="mt-9 flex flex-wrap gap-4">
+                <a
+                  href="#products"
+                  className="flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3.5 font-semibold text-white shadow-xl shadow-blue-600/20 transition hover:-translate-y-0.5 hover:bg-blue-700"
+                >
+                  Découvrir l'écosystème
+                  <ArrowRight size={18} />
+                </a>
+
+                <a
+                  href="#vision"
+                  className="rounded-full border border-slate-300 bg-white px-6 py-3.5 font-semibold text-slate-700 transition hover:border-blue-300 hover:text-blue-700"
+                >
+                  Notre vision
+                </a>
+              </div>
+
+              <div className="mt-12 grid max-w-xl grid-cols-3 gap-6 border-t border-slate-200 pt-8">
+                <div>
+                  <p className="text-2xl font-bold">IA</p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    intégrée au métier
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-2xl font-bold">Auto</p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    processus optimisés
+                  </p>
+                </div>
+
+                <div>
+                  <p className="text-2xl font-bold">ROI</p>
+                  <p className="mt-1 text-sm text-slate-500">
+                    valeur mesurable
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <EcosystemVisual />
+          </div>
+        </section>
+        <section className="bg-slate-50 py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="grid gap-12 lg:grid-cols-[0.9fr_1.1fr] lg:items-end">
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.22em] text-blue-600">
+                  Produits métiers
+                </p>
+
+                <h2 className="mt-4 max-w-3xl text-4xl font-bold tracking-tight sm:text-5xl">
+                  Des outils conçus pour résoudre des problèmes concrets.
+                </h2>
+              </div>
+
+              <p className="max-w-2xl text-lg leading-8 text-slate-600">
+                Nous partons du besoin métier, puis nous combinons données,
+                automatisation et intelligence artificielle pour construire des
+                solutions simples à utiliser et capables de produire un impact réel.
+              </p>
+            </div>
+
+            <div className="mt-14 grid gap-6 lg:grid-cols-3">
+              <article className="group relative overflow-hidden rounded-[2rem] border border-blue-200 bg-white p-8 shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-xl">
+                <div className="absolute right-0 top-0 h-32 w-32 rounded-full bg-blue-100 blur-3xl" />
+
+                <div className="relative">
+                  <div className="flex items-center justify-between gap-4">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-600 text-white">
+                      <HeartHandshake size={26} />
+                    </div>
+
+                    <span className="rounded-full bg-emerald-100 px-3 py-1 text-xs font-bold text-emerald-700">
+                      Live
+                    </span>
+                  </div>
+
+                  <h3 className="mt-8 text-2xl font-bold">
+                    FundraisingPortal
+                  </h3>
+
+                  <p className="mt-4 leading-7 text-slate-600">
+                    De l'analyse d'un dossier jusqu'au suivi des financeurs,
+                    FundraisingPortal structure l'ensemble du processus de recherche
+                    de financement.
+                  </p>
+
+                  <div className="mt-7 space-y-3 text-sm font-medium text-slate-700">
+                    <p>→ Analyse documentaire assistée par IA</p>
+                    <p>→ Qualification du dossier</p>
+                    <p>→ Matching avec les financeurs</p>
+                    <p>→ Pipeline, emails et relances</p>
+                  </div>
+
+                <Link
+                  to="/products/fundraising"
+                  className="mt-8 inline-flex items-center gap-2 font-bold text-blue-600"
+                >
+                  Découvrir FundraisingPortal
+                  <ArrowRight
+                    size={17}
+                    className="transition group-hover:translate-x-1"
+                  />
+                </Link>
+                </div>
+              </article>
+
+              <article className="group rounded-[2rem] border border-slate-200 bg-white p-8 transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50 text-blue-600">
+                    <FileText size={26} />
+                  </div>
+
+                  <span className="rounded-full bg-amber-100 px-3 py-1 text-xs font-bold text-amber-700">
+                    Building
+                  </span>
+                </div>
+
+                <h3 className="mt-8 text-2xl font-bold">DevisFlow</h3>
+
+                <p className="mt-4 leading-7 text-slate-600">
+                  Transformer plus rapidement une demande client en proposition
+                  commerciale structurée, cohérente et prête à être envoyée.
+                </p>
+
+                <div className="mt-7 space-y-3 text-sm font-medium text-slate-700">
+                  <p>→ Centralisation des demandes</p>
+                  <p>→ Assistance à la génération du devis</p>
+                  <p>→ Workflow de validation</p>
+                  <p>→ Suivi commercial automatisé</p>
+                </div>
+
+                <Link
+                  to="/products/devisflow"
+                  className="mt-8 inline-flex items-center gap-2 font-bold text-blue-600"
+                >
+                  Découvrir DevisFlow
+                  <ArrowRight
+                    size={17}
+                    className="transition group-hover:translate-x-1"
+                  />
+                </Link>
+              </article>
+
+              <article className="group rounded-[2rem] border border-slate-200 bg-white p-8 transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:shadow-xl">
+                <div className="flex items-center justify-between gap-4">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-violet-50 text-violet-600">
+                    <Bot size={26} />
+                  </div>
+
+                  <span className="rounded-full bg-violet-100 px-3 py-1 text-xs font-bold text-violet-700">
+                    Roadmap
+                  </span>
+                </div>
+
+                <h3 className="mt-8 text-2xl font-bold">DonorFlow</h3>
+
+                <p className="mt-4 leading-7 text-slate-600">
+                  Une future solution dédiée à la connaissance, la segmentation et
+                  l'engagement intelligent des donateurs.
+                </p>
+
+                <div className="mt-7 space-y-3 text-sm font-medium text-slate-700">
+                  <p>→ Centralisation des données donateurs</p>
+                  <p>→ Segmentation intelligente</p>
+                  <p>→ Engagement personnalisé</p>
+                  <p>→ Pilotage de la fidélisation</p>
+                </div>
+
+                <Link
+                  to="/products/donorflow"
+                  className="mt-8 inline-flex items-center gap-2 font-bold text-blue-600"
+                >
+                  Découvrir DonorFlow
+                  <ArrowRight
+                    size={17}
+                    className="transition group-hover:translate-x-1"
+                  />
+                </Link>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        {/* PRODUCTS */}
+        <section
+          id="products"
+          className="border-y border-slate-200 bg-white py-24"
         >
-          Count is {count}
-        </button>
-      </section>
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <p className="text-sm font-bold uppercase tracking-[0.22em] text-blue-600">
+                Notre écosystème
+              </p>
 
-      <div className="ticks"></div>
+              <h2 className="mt-4 text-4xl font-bold tracking-tight sm:text-5xl">
+                Chaque produit résout un besoin. Ensemble, ils créent un
+                système.
+              </h2>
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
+              <p className="mt-5 text-lg leading-8 text-slate-600">
+                Des solutions spécialisées conçues pour évoluer, se connecter
+                et augmenter progressivement la capacité opérationnelle de nos
+                clients.
+              </p>
+            </div>
 
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+            <div className="mt-12 grid gap-6 md:grid-cols-3">
+              {productCards.map((product) => {
+                const Icon = product.icon
+
+                return (
+                  <article
+                    key={product.name}
+                    className="group rounded-3xl border border-slate-200 bg-slate-50 p-7 transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-xl"
+                  >
+                    <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-blue-600 text-white">
+                      <Icon size={22} />
+                    </div>
+
+                    <div className="mt-7 flex items-center justify-between gap-3">
+                      <h3 className="text-xl font-bold">{product.name}</h3>
+
+                      <span
+                        className={`rounded-full px-3 py-1 text-xs font-bold ${statusStyles[product.status]}`}
+                      >
+                        {product.status}
+                      </span>
+                    </div>
+
+                    <p className="mt-4 leading-7 text-slate-600">
+                      {product.description}
+                    </p>
+
+                    <Link
+                      to={`/products/${product.slug}`}
+                      className="mt-7 flex items-center gap-2 text-sm font-bold text-blue-600"
+                    >
+                      Voir le produit
+                      <ArrowRight
+                        className="transition group-hover:translate-x-1"
+                        size={16}
+                      />
+                    </Link>
+                  </article>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
+        {/* MISSION / VISION / ROI */}
+        <section id="vision" className="py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="grid gap-8 lg:grid-cols-3">
+              <article className="rounded-3xl bg-blue-600 p-8 text-white shadow-xl shadow-blue-600/15">
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-blue-100">
+                  Mission
+                </p>
+
+                <h3 className="mt-5 text-3xl font-bold">
+                  Rendre l'IA réellement utile aux organisations.
+                </h3>
+
+                <p className="mt-5 leading-7 text-blue-100">
+                  En l'intégrant directement aux processus métier qui génèrent
+                  du temps, de la qualité et de la valeur.
+                </p>
+              </article>
+
+              <article className="rounded-3xl border border-slate-200 bg-white p-8">
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-blue-600">
+                  Vision
+                </p>
+
+                <h3 className="mt-5 text-3xl font-bold">
+                  Chaque métier mérite son propre Copilot.
+                </h3>
+
+                <p className="mt-5 leading-7 text-slate-600">
+                  Des assistants intelligents spécialisés, connectés aux outils,
+                  aux données et aux réalités opérationnelles.
+                </p>
+              </article>
+
+              <article className="rounded-3xl border border-slate-200 bg-white p-8">
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-blue-600">
+                  ROI
+                </p>
+
+                <h3 className="mt-5 text-3xl font-bold">
+                  L'IA doit produire un résultat mesurable.
+                </h3>
+
+                <p className="mt-5 leading-7 text-slate-600">
+                  Temps gagné, réduction des coûts, meilleure exécution,
+                  nouvelles opportunités et décisions plus fiables.
+                </p>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        {/* APPROACH */}
+        <section id="solutions" className="bg-slate-950 py-24 text-white">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <p className="text-sm font-bold uppercase tracking-[0.22em] text-blue-400">
+                Notre approche
+              </p>
+
+              <h2 className="mt-4 text-4xl font-bold sm:text-5xl">
+                Nous ne vendons pas de l'IA. Nous construisons des systèmes.
+              </h2>
+            </div>
+
+            <div className="mt-14 grid gap-6 md:grid-cols-3">
+              {[
+                {
+                  title: 'IA + Métier',
+                  text: "L'intelligence artificielle prend de la valeur lorsqu'elle comprend le contexte métier.",
+                },
+                {
+                  title: 'Automatisation + Humain',
+                  text: 'Nous automatisons les tâches répétitives tout en gardant le contrôle humain sur les décisions importantes.',
+                },
+                {
+                  title: 'Produit + Mesure',
+                  text: 'Chaque solution doit améliorer un indicateur réel : temps, coût, qualité, conversion ou revenu.',
+                },
+              ].map((item) => (
+                <article
+                  key={item.title}
+                  className="rounded-3xl border border-white/10 bg-white/5 p-7 backdrop-blur"
+                >
+                  <Workflow className="text-blue-400" size={25} />
+                  <h3 className="mt-6 text-xl font-bold">{item.title}</h3>
+                  <p className="mt-4 leading-7 text-slate-400">{item.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ROADMAP */}
+        <section id="roadmap" className="bg-white py-24">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+            <p className="text-sm font-bold uppercase tracking-[0.22em] text-blue-600">
+              Évolution
+            </p>
+
+            <h2 className="mt-4 max-w-3xl text-4xl font-bold sm:text-5xl">
+              L'écosystème grandit à chaque nouvelle solution.
+            </h2>
+
+            <div className="mt-14 grid gap-5 md:grid-cols-4">
+              {ecosystemProducts.map((product, index) => (
+                <article
+                  key={product.name}
+                  className="relative rounded-3xl border border-slate-200 bg-slate-50 p-6"
+                >
+                  <p className="text-sm font-bold text-blue-600">
+                    0{index + 1}
+                  </p>
+
+                  <h3 className="mt-5 text-lg font-bold">{product.name}</h3>
+
+                  <span
+                    className={`mt-4 inline-flex rounded-full px-3 py-1 text-xs font-bold ${statusStyles[product.status]}`}
+                  >
+                    {product.status}
+                  </span>
+
+                  <p className="mt-5 text-sm leading-6 text-slate-500">
+                    {product.description}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* CTA */}
+        <section
+          id="contact"
+          className="border-t border-slate-800 bg-slate-950 py-20 text-white"
+        >
+          <div className="mx-auto flex max-w-7xl flex-col justify-between gap-10 px-6 lg:flex-row lg:items-center lg:px-8">
+            <div className="max-w-2xl">
+              <p className="text-sm font-bold uppercase tracking-[0.22em] text-blue-400">
+                AD Consulting IA
+              </p>
+
+              <h2 className="mt-4 text-4xl font-bold">
+                Quel processus vous fait perdre du temps aujourd'hui ?
+              </h2>
+
+              <p className="mt-5 text-lg text-slate-400">
+                Nous pouvons probablement le transformer en système intelligent.
+              </p>
+            </div>
+
+            <a
+              href="mailto:contact@adconsultingai.ch"
+              className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-7 py-4 font-bold text-white transition hover:bg-blue-500"
+            >
+              Parler de mon projet
+              <ArrowRight size={18} />
+            </a>
+          </div>
+        </section>
+      </main>
+    </div>
+  )
+}
+
+function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/products/:productId" element={<ProductPage />} />
+    </Routes>
   )
 }
 
