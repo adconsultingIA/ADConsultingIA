@@ -10,7 +10,7 @@ import {
 } from 'lucide-react'
 import { Link, useParams } from 'react-router-dom'
 const FUNDRAISING_DEMO_URL =
-  'https://fundraising.adconsultingai.ch'
+  'https://fundraising.adconsultingia.ch'
 
 const products = {
   fundraising: {
@@ -161,12 +161,12 @@ function FundraisingPage() {
                 <ArrowRight size={18} />
               </a>
 
-              <a
-                href="mailto:contact@adconsultingai.ch"
+              <Link
+                to="/#contact"
                 className="rounded-full border border-slate-300 bg-white px-6 py-3.5 font-semibold text-slate-700 transition hover:border-blue-300 hover:text-blue-700"
               >
                 Demander une démonstration
-              </a>
+              </Link>
             </div>
           </div>
 
@@ -368,7 +368,7 @@ function FundraisingPage() {
               </a>
 
               <a
-                href="mailto:contact@adconsultingai.ch"
+                href="mailto:contact@adconsultingia.ch"
                 className="inline-flex items-center rounded-full border border-white/30 px-6 py-3.5 font-bold text-white transition hover:bg-white/10"
               >
                 Nous contacter
@@ -431,7 +431,7 @@ function DevisFlowPage() {
             </a>
 
             <a
-              href="mailto:contact@adconsultingai.ch"
+              href="mailto:contact@adconsultingia.ch"
               className="rounded-full border border-slate-300 bg-white px-6 py-3.5 font-semibold text-slate-700 transition hover:border-blue-300 hover:text-blue-700"
             >
               Suivre le développement
@@ -540,7 +540,7 @@ function DevisFlowPage() {
             </p>
 
             <a
-              href="mailto:contact@adconsultingai.ch"
+              href="mailto:contact@adconsultingia.ch"
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3.5 font-bold text-white"
             >
               Nous contacter
@@ -604,7 +604,7 @@ function DonorFlowPage() {
             </a>
 
             <a
-              href="mailto:contact@adconsultingai.ch"
+              href="mailto:contact@adconsultingia.ch"
               className="rounded-full border border-slate-300 bg-white px-6 py-3.5 font-semibold text-slate-700 transition hover:border-blue-300 hover:text-blue-700"
             >
               Nous contacter
@@ -722,7 +722,7 @@ function DonorFlowPage() {
             </p>
 
             <a
-              href="mailto:contact@adconsultingai.ch"
+              href="mailto:contact@adconsultingia.ch"
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-blue-600 px-6 py-3.5 font-bold text-white"
             >
               Nous contacter
@@ -795,7 +795,7 @@ function GenericProductPage({ product }: { product: GenericProduct }) {
             </p>
 
             <a
-              href="mailto:contact@adconsultingai.ch"
+              href="mailto:contact@adconsultingia.ch"
               className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3 font-bold text-blue-700"
             >
               Nous contacter

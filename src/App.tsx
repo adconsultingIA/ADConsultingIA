@@ -8,7 +8,8 @@ import {
   Sparkles,
   Workflow,
 } from 'lucide-react'
-import { Link, Route, Routes } from 'react-router-dom'
+import React, { useState } from 'react'
+import { Link, Route, Routes, useLocation } from 'react-router-dom'
 import ProductPage from './pages/ProductPage'
 
 type ProductStatus = 'Live' | 'Building' | 'Roadmap' | 'Coming Soon'
@@ -171,9 +172,8 @@ function EcosystemVisual() {
         const Icon = product.icon
         const isComingSoon = product.status === 'Coming Soon'
 
-        return (
+        const card = (
           <article
-            key={product.name}
             className="ecosystem-node group absolute z-30 w-[190px] -translate-x-1/2 -translate-y-1/2 rounded-3xl border border-slate-200 bg-white/95 p-5 shadow-xl backdrop-blur transition duration-300 hover:z-40 hover:-translate-y-[55%] hover:scale-105 hover:border-blue-300 hover:shadow-2xl"
             style={{
               left: `${product.x}%`,
@@ -211,12 +211,106 @@ function EcosystemVisual() {
             )}
           </article>
         )
+
+        if (product.slug === 'fundraising') {
+          return (
+            <Link
+              key={product.name}
+              to="/products/fundraising"
+              aria-label="Découvrir FundraisingPortal"
+            >
+              {card}
+            </Link>
+          )
+        }
+
+        return (
+          <div key={product.name}>
+            {card}
+          </div>
+        )
       })}
     </div>
   )
 }
 
 function HomePage() {
+const location = useLocation()
+
+React.useEffect(() => {
+  if (location.hash === '#contact') {
+    setTimeout(() => {
+      document
+        .getElementById('contact')
+        ?.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        })
+    }, 100)
+  }
+}, [location.hash])
+
+const [contactStatus, setContactStatus] = useState<
+  'idle' | 'loading' | 'success' | 'error'
+>('idle')
+
+const [contactMessage, setContactMessage] = useState('')
+
+const handleContactSubmit = async (
+  event: React.FormEvent<HTMLFormElement>
+) => {
+  event.preventDefault()
+
+  setContactStatus('loading')
+  setContactMessage('')
+
+  const form = event.currentTarget
+  const formData = new FormData(form)
+
+  const payload = {
+    name: formData.get('name'),
+    company: formData.get('company'),
+    email: formData.get('email'),
+    phone: formData.get('phone'),
+    product: formData.get('product'),
+    message: formData.get('message'),
+  }
+
+  try {
+    const response = await fetch('/api/contact', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    })
+
+    const data = await response.json()
+
+    if (!response.ok) {
+      throw new Error(
+        data.message || 'Impossible d’envoyer la demande.'
+      )
+    }
+
+    setContactStatus('success')
+    setContactMessage(
+      data.message || 'Votre demande a bien été envoyée.'
+    )
+
+    form.reset()
+  } catch (error) {
+    console.error('[contact]', error)
+
+    setContactStatus('error')
+    setContactMessage(
+      error instanceof Error
+        ? error.message
+        : 'Une erreur est survenue.'
+    )
+  }
+}
+
   return (
     <div className="min-h-screen bg-slate-50 text-slate-950">
       <header className="sticky top-0 z-50 border-b border-slate-200/70 bg-white/85 backdrop-blur-xl">
@@ -390,16 +484,28 @@ function HomePage() {
                     <p>→ Pipeline, emails et relances</p>
                   </div>
 
-                <Link
-                  to="/products/fundraising"
-                  className="mt-8 inline-flex items-center gap-2 font-bold text-blue-600"
-                >
-                  Découvrir FundraisingPortal
-                  <ArrowRight
-                    size={17}
-                    className="transition group-hover:translate-x-1"
-                  />
-                </Link>
+                <div className="mt-8 flex flex-wrap items-center gap-5">
+                  <Link
+                    to="/products/fundraising"
+                    className="inline-flex items-center gap-2 font-bold text-blue-600"
+                  >
+                    Découvrir FundraisingPortal
+                    <ArrowRight
+                      size={17}
+                      className="transition group-hover:translate-x-1"
+                    />
+                  </Link>
+
+                  <a
+                    href="https://fundraising.adconsultingia.ch"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full bg-blue-600 px-5 py-2.5 text-sm font-bold text-white transition hover:bg-blue-700"
+                  >
+                    Voir la démo
+                    <ArrowRight size={16} />
+                  </a>
+                </div>
                 </div>
               </article>
 
@@ -898,32 +1004,169 @@ function HomePage() {
         </section>
 
         {/* CTA */}
+        {/* CONTACT */}
         <section
           id="contact"
           className="border-t border-slate-800 bg-slate-950 py-20 text-white"
         >
-          <div className="mx-auto flex max-w-7xl flex-col justify-between gap-10 px-6 lg:flex-row lg:items-center lg:px-8">
-            <div className="max-w-2xl">
+          <div className="mx-auto grid max-w-7xl gap-12 px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:px-8">
+            <div className="max-w-xl">
               <p className="text-sm font-bold uppercase tracking-[0.22em] text-blue-400">
                 AD Consulting IA
               </p>
 
               <h2 className="title-section font-bold">
-                Quel processus vous fait perdre du temps aujourd'hui ?
+                Parlons de votre projet.
               </h2>
 
-              <p className="mt-5 text-lg text-slate-400">
-                Nous pouvons probablement le transformer en système intelligent.
+              <p className="mt-5 text-lg leading-8 text-slate-400">
+                Décrivez votre besoin, le produit qui vous intéresse ou le processus
+                que vous souhaitez automatiser. Nous reviendrons vers vous pour
+                organiser une démonstration ou échanger sur votre projet.
               </p>
             </div>
 
-            <a
-              href="mailto:contact@adconsultingai.ch"
-              className="inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-7 py-4 font-bold text-white transition hover:bg-blue-500"
+            <form
+              className="rounded-[2rem] border border-white/10 bg-white/5 p-6 backdrop-blur sm:p-8"
+                onSubmit={handleContactSubmit}
             >
-              Parler de mon projet
-              <ArrowRight size={18} />
-            </a>
+              <div className="grid gap-5 sm:grid-cols-2">
+                <div>
+                  <label
+                    htmlFor="contact-name"
+                    className="mb-2 block text-sm font-semibold text-slate-200"
+                  >
+                    Nom *
+                  </label>
+                  <input
+                    id="contact-name"
+                    name="name"
+                    type="text"
+                    required
+                    className="w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-blue-400"
+                    placeholder="Votre nom"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-company"
+                    className="mb-2 block text-sm font-semibold text-slate-200"
+                  >
+                    Entreprise
+                  </label>
+                  <input
+                    id="contact-company"
+                    name="company"
+                    type="text"
+                    className="w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-blue-400"
+                    placeholder="Votre organisation"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-email"
+                    className="mb-2 block text-sm font-semibold text-slate-200"
+                  >
+                    Email *
+                  </label>
+                  <input
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    required
+                    className="w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-blue-400"
+                    placeholder="vous@entreprise.com"
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="contact-phone"
+                    className="mb-2 block text-sm font-semibold text-slate-200"
+                  >
+                    Téléphone
+                  </label>
+                  <input
+                    id="contact-phone"
+                    name="phone"
+                    type="tel"
+                    className="w-full rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-blue-400"
+                    placeholder="+33 ..."
+                  />
+                </div>
+              </div>
+
+              <div className="mt-5">
+                <label
+                  htmlFor="contact-product"
+                  className="mb-2 block text-sm font-semibold text-slate-200"
+                >
+                  Produit concerné *
+                </label>
+
+                <select
+                  id="contact-product"
+                  name="product"
+                  required
+                  defaultValue=""
+                  className="w-full rounded-2xl border border-white/10 bg-slate-900 px-4 py-3 text-white outline-none transition focus:border-blue-400"
+                >
+                  <option value="" disabled>
+                    Sélectionner un produit
+                  </option>
+                  <option value="FundraisingPortal">FundraisingPortal</option>
+                  <option value="DevisFlow">DevisFlow</option>
+                  <option value="DonorFlow">DonorFlow</option>
+                  <option value="Autre">Autre besoin</option>
+                </select>
+              </div>
+
+              <div className="mt-5">
+                <label
+                  htmlFor="contact-message"
+                  className="mb-2 block text-sm font-semibold text-slate-200"
+                >
+                  Votre besoin *
+                </label>
+
+                <textarea
+                  id="contact-message"
+                  name="message"
+                  required
+                  rows={5}
+                  className="w-full resize-none rounded-2xl border border-white/10 bg-white/10 px-4 py-3 text-white outline-none transition placeholder:text-slate-500 focus:border-blue-400"
+                  placeholder="Décrivez brièvement votre projet ou ce que vous souhaitez voir pendant la démonstration."
+                />
+              </div>
+
+                <button
+                  type="submit"
+                  disabled={contactStatus === 'loading'}
+                  className="mt-6 inline-flex items-center justify-center gap-2 rounded-full bg-blue-600 px-7 py-4 font-bold text-white transition hover:bg-blue-500 disabled:cursor-not-allowed disabled:opacity-60"
+                >
+                  {contactStatus === 'loading'
+                    ? 'Envoi en cours...'
+                    : 'Demander une démonstration'}
+
+                  {contactStatus !== 'loading' && (
+                    <ArrowRight size={18} />
+                  )}
+                </button>
+
+                  {contactMessage && (
+                    <p
+                      className={`mt-4 text-sm font-semibold ${
+                        contactStatus === 'success'
+                          ? 'text-emerald-400'
+                          : 'text-red-400'
+                      }`}
+                    >
+                      {contactMessage}
+                    </p>
+                  )}
+            </form>
           </div>
         </section>
       </main>
@@ -976,10 +1219,10 @@ function HomePage() {
 
             <div className="mt-4 space-y-3 text-sm text-slate-400">
               <a
-                href="mailto:contact@adconsultingai.ch"
+                href="/#contact"
                 className="block hover:text-white"
               >
-                contact@adconsultingai.ch
+                contact@adconsultingia.ch
               </a>
 
               <a
